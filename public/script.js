@@ -55,3 +55,6 @@ async function cancelarAgendamento(id) {
     await fetch(`/agendamentos/${id}`, { method: "DELETE" });
     carregarAgendamentos(); // atualiza a lista
 }
+
+
+
