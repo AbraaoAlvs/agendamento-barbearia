@@ -10,10 +10,19 @@
     <h1>✂️ Agendamento de Barbearia</h1>
     
     <form id="formAgendamento">
-        <input type="text" id="nome" placeholder="Seu nome" required />
+        <input type="text" id="nome" placeholder="Seu nome" required>
+
+        <select id="servico" required>
+            <option value="" disabled selected>Selecione o serviço</option>
+            <option value="corte">Corte de Cabelo</option>
+            <option value="barba">Barba</option>
+            <option value="combo">Combo (Corte + Barba)</option>
+        </select>
+
         <input type="date" id="data" required />
-        <input type="Time" id="horario" required />
+        <input type="time" id="horario" required />
         <button type="submit">Agendar</button>
+
     </form>
 
     <h2>Agendamentos</h2>

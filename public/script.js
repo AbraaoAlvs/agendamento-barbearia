@@ -8,6 +8,7 @@ document.getElementById("formAgendamento").addEventListener("submit", async (e) 
     e.preventDefault(); // impede a página de recarregar
 
     const nome = document.getElementById("nome").value;
+    const servico = document.getElementById("servico").value;
     const data = document.getElementById("data").value;
     const horario = document.getElementById("horario").value;
 
@@ -15,7 +16,7 @@ document.getElementById("formAgendamento").addEventListener("submit", async (e) 
     const resposta = await fetch("/agendamentos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nome, data, horario })
+        body: JSON.stringify({ nome, servico,data, horario })
     });
 
     if (resposta.ok) {
@@ -31,6 +32,7 @@ async function carregarAgendamentos() {
     const resposta = await fetch("/agendamentos");
     const agendamentos = await resposta.json();
 
+    
     const lista = document.getElementById("listaAgendamentos");
     lista.innerHTML = ""; // limpa a lista antes de renderizar
     
@@ -39,6 +41,7 @@ async function carregarAgendamentos() {
         item.innerHTML = `
             <div>
              <strong>${ag.nome}</strong><br>
+             <span>${ag.servico}</span><br>
              <span>${ag.data} às ${ag.horario}</span>
             </div>
             <button onclick="cancelarAgendamento(${ag.id})">Cancelar</button>

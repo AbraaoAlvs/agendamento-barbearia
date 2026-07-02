@@ -16,7 +16,7 @@ app.get("/", (_req, res) => {
 app.get("/agendamentos", async (_req, res) => {
     try {
         const result = await sql.query`
-            SELECT id, nome, 
+            SELECT id, nome, servico,
                    CONVERT(VARCHAR, data, 23) AS data, 
                    CONVERT(VARCHAR, horario, 108) AS horario 
             FROM agendamentos 
@@ -30,16 +30,16 @@ app.get("/agendamentos", async (_req, res) => {
 
 // POST — insere um novo agendamento no banco
 app.post("/agendamentos", async (req, res) => {
-    const { nome, data, horario } = req.body;
+    const { nome, servico,data, horario } = req.body;
 
-    if (!nome || !data || !horario) {
+    if (!nome || !servico || !data || !horario) {
         return res.status(400).json({ error: "Preencha todos os dados" });
     }
 
     try {
         await sql.query`
-            INSERT INTO agendamentos (nome, data, horario) 
-            VALUES (${nome}, ${data}, ${horario})
+            INSERT INTO agendamentos (nome, servico, data, horario) 
+            VALUES (${nome}, ${servico}, ${data}, ${horario})
         `;
         res.status(201).json({ mensagem: "Agendamento criado com sucesso!" });
     } catch (err) {
