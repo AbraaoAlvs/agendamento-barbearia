@@ -1,6 +1,21 @@
 // 1. Quando a página carregar, busca os agendamentos existentes
 document.addEventListener("DOMContentLoaded", () => {
+    // Define a data mínima como hoje
+    const hoje = new Date().toISOString().split("T")[0];
+    document.getElementById("data").min = hoje;
+    
     carregarAgendamentos();
+});
+
+// Bloqueia domingos e segundas no calendário
+document.getElementById("data").addEventListener("input", function () {
+    const data = new Date(this.value + "T00:00:00");
+    const diaSemana = data.getDay(); // 0 = domingo, 1 = segunda
+
+    if (diaSemana === 0 || diaSemana === 1) {
+        alert("A barbearia não atende aos domingos e segundas-feiras. Por favor, escolha outro dia.");
+        this.value = "";
+    }
 });
 
 // 2. Quando o formulário for enviado, cria um novo agendamento
@@ -32,7 +47,7 @@ async function carregarAgendamentos() {
     const resposta = await fetch("/agendamentos");
     const agendamentos = await resposta.json();
 
-    
+
     const lista = document.getElementById("listaAgendamentos");
     lista.innerHTML = ""; // limpa a lista antes de renderizar
     
